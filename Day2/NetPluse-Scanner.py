@@ -1,5 +1,5 @@
 import socket 
-from datetime import datetime, timedelta  
+from datetime import datetime, detatime  
 
 
 def port_scanner(target, ports):
@@ -12,8 +12,29 @@ def port_scanner(target, ports):
         for port in ports:
             
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    except socket.error as e:
-        print(f"[!] Error: {e}")
+            socket.setdefaulttimeout(1)
+            
+            result =  s.connect_ex((target, port))
+            
+            if result == 0:
+                print(f"[+] port {port}: OPEN")
+                
+            s.close()
+            
     except KeyboardInterrupt:
-        print("[!] Scan cancelled by user")
-     
+        print("\n [-] Exiting Program...")
+    except socket.gairror:
+        print("\n [-] Hostname Could Not Be Resolved")
+    except socket.error:
+        print("\n [-] server not responding. ")
+        
+if __name__ == "__main__":
+    target_ip = input("[+] Enter Target IP: ").strip()
+    
+    common_ports = [21, 22, 23, 25, 53, 80, 110, 139, 143, 443, 445, 3389]
+    
+    port_scanner(target_ip, common_ports)
+            
+
+            
+            
