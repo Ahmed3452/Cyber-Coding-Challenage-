@@ -1,5 +1,5 @@
 import socket 
-from datetime import datetime, detatime  
+from datetime import datetime
 
 
 def port_scanner(target, ports):
